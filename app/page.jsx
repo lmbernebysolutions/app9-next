@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { jsPDF } from 'jspdf';
 import { 
   User, Shield, Heart, Brain, 
   Activity, BookOpen, ChevronRight, ChevronLeft, 
@@ -9,7 +10,7 @@ import {
   MessageCircle, Hand, BatteryCharging,
   Glasses, ArrowRightLeft, Volume2, Scale,
   Lock, Unlock, Thermometer, Layers,
-  CheckCircle, Target
+  CheckCircle, FileDown
 } from 'lucide-react';
 
 const ACCESS_PASSWORD = 'Vortrag2025!';
@@ -69,6 +70,18 @@ const styles = `
     50% { filter: drop-shadow(0 0 25px rgba(255,255,255,0.8)); }
   }
 
+  /* Umlauf (für Intro-Highlights) */
+  @keyframes orbit-10s {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Sanftes Schimmern */
+  @keyframes shimmer-10s {
+    0%, 100% { opacity: 0.25; }
+    50% { opacity: 0.75; }
+  }
+
   /* Utility Classes */
   .animate-float-10s { animation: float-10s 10s ease-in-out infinite; }
   .animate-pulse-10s { animation: pulse-10s 10s ease-in-out infinite; }
@@ -78,7 +91,11 @@ const styles = `
   .animate-battery-fill-10s { animation: battery-fill-10s 10s ease-in-out infinite; }
   .animate-scan-10s { animation: scan-10s 10s linear infinite; }
   .animate-glow-10s { animation: glow-10s 10s ease-in-out infinite; }
+  .animate-orbit-10s { animation: orbit-10s 10s linear infinite; }
+  .animate-shimmer-10s { animation: shimmer-10s 10s ease-in-out infinite; }
 `;
+
+const TEAM_MEMBERS = ["Laura", "Liliane", "Gregor", "Lennard"];
 
 // --- DATENBASIS ---
 
@@ -145,13 +162,12 @@ const presentationData = [
       }
     ],
     wiki: `
-      1. Begriffsklärung: Professionelle Haltung ist die innere Grundorientierung, bestehend aus Fachwissen, Ethik und Reflexion. Sie ist das Fundament, auf dem Methoden erst wirken.
-      2. Formen: Aggression kann verbal (Schreien), nonverbal (Drohgebärden) oder gegen sich selbst gerichtet sein. Wichtig: Selbstverletzung oft als Spannungsregulation verstehen.
-      3. Theorie: 
-         - Bindungstheorie: Unsichere Bindung führt zu geringer Frustrationstoleranz.
-         - Systemisch: Der Jugendliche ist oft "Symptomträger" eines kranken Systems.
-         - Stress/Arousal: Hohes Stresslevel blockiert das rationale Denken.
-      (Quellen: Dokument 2; Bowlby, Brisch).
+      1. Begriffsklärung: Professionelle Haltung beschreibt eine relativ stabile innere Orientierung, die Denken, Fühlen und Handeln im beruflichen Kontext prägt. Sie verbindet Werte, Ethik, Menschenbild und fachliche Annahmen als Leitlinie in unsicheren Konfliktsituationen.
+      2. Formen: Aggression zeigt sich verbal (Beschimpfung, Drohung), nonverbal (bedrohliche Körpersprache, Distanzverletzung, Sachbeschädigung) und selbstverletzend. Selbstverletzung dient häufig Spannungsregulation, Emotionskontrolle und dem Versuch, Kontrolle zurückzugewinnen.
+      3. Theorie:
+         - Bindungstheorie: Unsichere oder desorganisierte Bindung erschwert Emotionsregulation; Aggression kann als Bindungssignal verstanden werden.
+         - Systemisch: Verhalten ist ein sinnvoller Ausdruck im sozialen System und oft ein Lösungsversuch bei Loyalitätskonflikten.
+         - Stress/Arousal: Hohe innere Erregung führt zu Alarmmodus und Kontrollverlust; Sprache und Einsicht sind dann kaum möglich.
     `
   },
   {
@@ -202,7 +218,6 @@ const presentationData = [
          - Grenzen = Schutz & Orientierung (wertschätzend).
          - Strafe = Machtinstrument & Demütigung.
          - Konsequenzen müssen logisch sein (z.B. Aufräumen nach Werfen) und die Beziehung erhalten.
-      (Quelle: Prüfung 2.pdf; Thomas Gordon; Low Arousal Ansatz).
     `
   },
   {
@@ -248,7 +263,6 @@ const presentationData = [
       1. Carl Rogers: Die drei Basisvariablen (Empathie, Akzeptanz, Kongruenz) sind in Krisen am schwersten, aber am wichtigsten.
       2. Schamsensibilität: Viele aggressive Jugendliche schämen sich schnell. Beschämung (z.B. öffentliches Zurechtweisen) führt zu neuer Aggression.
       3. Wiederannäherung: Nach dem Konflikt muss die Fachkraft aktiv das Angebot zur Beziehung machen. Das zeigt: "Die Beziehung hält das aus."
-      (Quellen: Dokument 3; Rogers; Traumapädagogik).
     `
   },
   {
@@ -265,10 +279,10 @@ const presentationData = [
         bullets: [
           "Wir sind subjektiv (Biografie, Werte).",
           "Gefahr: Persönliche Kränkung (Das 'Selbst').",
-          "Ziel: Zurück in die professionelle 'Rolle'."
+          "Ziel: Zurück in die professionelle 'Rolle'.",
+          "In der Reflexion Selbst und Rolle bewusst auseinanderhalten (Ansatz u. a. bei Dahrendorf)."
         ],
-        interactive: "role-switch",
-        quote: "„Trennung von Selbst und Rolle in der Introspektion.“ (Dahrendorf)"
+        interactive: "role-switch"
       },
       {
         headline: "Trigger & Macht",
@@ -307,7 +321,6 @@ const presentationData = [
       2. Trigger: Individuelle Auslöser für Stress. Führen oft zu "Dominanzverhalten" (Maja Heiner) oder Machtmissbrauch, um eigene Ohnmacht nicht zu spüren.
       3. Re-Inszenierung: Wir dürfen nicht in die Rolle fallen, die der Jugendliche erwartet (der strafende Erwachsene), sondern müssen eine korrigierende Erfahrung bieten (Passungsmodell).
       4. Hygiene: Selbstschutz ist ethische Pflicht (Nicht schaden).
-      (Quellen: Prof. Reimann-Bernhardt; Maja Heiner; W. Müller).
     `
   },
   {
@@ -341,6 +354,78 @@ const presentationData = [
   }
 ];
 
+const apaReferences = [
+  "American Psychological Association. (2020). Publication manual of the American Psychological Association (7th ed.). Author.",
+  "Bierhoff, H.-W., & Wagner, U. (1998). Aggression und Gewalt in der Gesellschaft. Westdeutscher Verlag.",
+  "Bock, T., & Roh, D. (2017). Professionelle Beziehungsgestaltung in der Sozialen Arbeit. Beltz Juventa.",
+  "Bock, T., & Seithe, M. (2017). Traumapadagogik in der Praxis: Grundlagen und Methoden fur die Arbeit mit Kindern und Jugendlichen. Beltz Juventa.",
+  "Bohnisch, L. (2010). Lebensbewaltigung: Ein sozialpadagogisches Konzept. Beltz Juventa.",
+  "Bowlby, J. (1988). A secure base: Parent-child attachment and healthy human development. Basic Books.",
+  "Brisch, K. H. (2011). Bindungsstorungen: Von der Bindungstheorie zur Therapie (4. Aufl.). Klett-Cotta.",
+  "Dupuis, M., Hahn, K., & Wigger, L. (2017). Ethos in der Padagogik: Eine professionelle Haltung reflektieren und ausbilden. Verlag Barbara Budrich.",
+  "Goldbeck, L., & Ellerkamp, T. (2012). Psychotraumatologie des Kindes- und Jugendalters. In L. Goldbeck (Hrsg.), Psychische Storungen im Kindes- und Jugendalter (S. 205-232). Kohlhammer.",
+  "Gordon, T. (1970). Parent effectiveness training: The no-lose program for raising responsible children. Wyden.",
+  "Gordon, T. (2004). Familienkonferenz: Die Losung von Konflikten zwischen Eltern und Kind (uberarb. Neuausg.). Heyne.",
+  "Heiner, M. (2004). Soziale Arbeit als Beruf. Juventa.",
+  "Heiner, M. (2006). Methodisches Handeln in der Sozialen Arbeit. In H.-U. Otto & H. Thiersch (Hrsg.), Handbuch Soziale Arbeit (3. Aufl., S. 896-907). Luchterhand.",
+  "Hilgers, M. (2010). Scham: Gesichter eines Affekts. Vandenhoeck & Ruprecht.",
+  "Ich-Botschaft. (2025, January 20). In Wikipedia. https://de.wikipedia.org/wiki/Ich-Botschaft",
+  "Kecojevic, K. (2023). Unsichere Bindung in der Adoleszenz (Dissertation). Ludwig-Maximilians-Universitat Munchen. https://edoc.ub.uni-muenchen.de/34494/1/Kecojevic_Katarina.pdf",
+  "Klonsky, E. D. (2007). The functions of deliberate self-injury: A review of the evidence. Clinical Psychology Review, 27(2), 226-239.",
+  "Kuhne, A. (2017). Theoretische Reflexionen zur professionellen Haltung in der Sozialen Arbeit mit Gefluchteten. Springer VS.",
+  "LWL-Klinik Paderborn. (n.d.). Borderline, selbstverletzendes Verhalten (SVV) & Impulsstorungen. https://www.lwl-klinik-paderborn.de/de/fuer-patienten-angehoerige/informationen-zu-erkrankungen-erwachsenenpsychiatrie/borderline-selbstverletzendes-verhalten-svv-impulsstoerungen/",
+  "McDonnell, A. A. (2010). Managing aggressive behaviour in care settings: Understanding the Low Arousal Approach. Wiley-Blackwell.",
+  "McDonnell, A. A. (2019). The Low Arousal Approach: Restrictive practices, behaviour and wellbeing. Learning Disability Practice, 22(2), 26-31.",
+  "Muller, W. (2012). Burnout-Pravention in der Sozialen Arbeit. Kohlhammer.",
+  "Reimann, G. (2013). Professionelles Handeln und Selbstreflexion in der Sozialen Arbeit. In G. Reimann-Bernhardt (Hrsg.), Reflexive Soziale Arbeit (S. 15-32). VS Verlag.",
+  "Ritscher, W. (2008). Rezension zu \"Soziale Arbeit als Beruf\" von Maja Heiner. socialnet Rezensionen. https://www.socialnet.de/rezensionen/6613.php",
+  "Rogers, C. R. (1957). The necessary and sufficient conditions of therapeutic personality change. Journal of Consulting Psychology, 21(2), 95-103.",
+  "Rogers, C. R. (1961). On becoming a person: A therapist's view of psychotherapy. Houghton Mifflin.",
+  "Sarafoff, A., & Wesche, R. (2011). Selbstverletzendes Verhalten: Grundlagen, Diagnostik und Therapie (2. Aufl.). Beltz.",
+  "Scheff, T. J. (2003). Shame in self and society. Symbolic Interaction, 26(2), 239-262.",
+  "Silkenbeumer, M. (2000). Aggression und Gewalt im Kindes- und Jugendalter. Juventa.",
+  "Studio 3 Training Systems. (2016). What is the Low Arousal Approach? https://www.studio3.org/training-and-coaching/low-arousal-training",
+  "Tausch, R., & Tausch, A.-M. (2017). Erziehungspsychologie: Begegnung von Person zu Person (14. Aufl.). Beltz.",
+  "Walsh, F. (2015). Strengthening family resilience (3rd ed.). Guilford Press.",
+  "Yerkes, R. M., & Dodson, J. D. (1908). The relation of strength of stimulus to rapidity of habit-formation. Journal of Comparative Neurology and Psychology, 18, 459-482.",
+  "Gordon-Modell. (2025, January 15). In Wikipedia. https://de.wikipedia.org/wiki/Gordon-Modell"
+];
+
+const sectionReferences = {
+  "part-a": [
+    "Dupuis, M., Hahn, K., & Wigger, L. (2017). Ethos in der Padagogik: Eine professionelle Haltung reflektieren und ausbilden. Verlag Barbara Budrich.",
+    "Kuhne, A. (2017). Theoretische Reflexionen zur professionellen Haltung in der Sozialen Arbeit mit Gefluchteten. Springer VS.",
+    "Bowlby, J. (1988). A secure base: Parent-child attachment and healthy human development. Basic Books.",
+    "Brisch, K. H. (2011). Bindungsstorungen: Von der Bindungstheorie zur Therapie (4. Aufl.). Klett-Cotta.",
+    "Kecojevic, K. (2023). Unsichere Bindung in der Adoleszenz (Dissertation). Ludwig-Maximilians-Universitat Munchen. https://edoc.ub.uni-muenchen.de/34494/1/Kecojevic_Katarina.pdf",
+    "Yerkes, R. M., & Dodson, J. D. (1908). The relation of strength of stimulus to rapidity of habit-formation. Journal of Comparative Neurology and Psychology, 18, 459-482."
+  ],
+  "part-b": [
+    "McDonnell, A. A. (2010). Managing aggressive behaviour in care settings: Understanding the Low Arousal Approach. Wiley-Blackwell.",
+    "McDonnell, A. A. (2019). The Low Arousal Approach: Restrictive practices, behaviour and wellbeing. Learning Disability Practice, 22(2), 26-31.",
+    "Gordon, T. (1970). Parent effectiveness training: The no-lose program for raising responsible children. Wyden.",
+    "Gordon, T. (2004). Familienkonferenz: Die Losung von Konflikten zwischen Eltern und Kind (uberarb. Neuausg.). Heyne.",
+    "Bohnisch, L. (2010). Lebensbewaltigung: Ein sozialpadagogisches Konzept. Beltz Juventa."
+  ],
+  "part-c": [
+    "Rogers, C. R. (1957). The necessary and sufficient conditions of therapeutic personality change. Journal of Consulting Psychology, 21(2), 95-103.",
+    "Rogers, C. R. (1961). On becoming a person: A therapist's view of psychotherapy. Houghton Mifflin.",
+    "Scheff, T. J. (2003). Shame in self and society. Symbolic Interaction, 26(2), 239-262.",
+    "Hilgers, M. (2010). Scham: Gesichter eines Affekts. Vandenhoeck & Ruprecht.",
+    "Bock, T., & Seithe, M. (2017). Traumapadagogik in der Praxis: Grundlagen und Methoden fur die Arbeit mit Kindern und Jugendlichen. Beltz Juventa."
+  ],
+  "part-d": [
+    "Heiner, M. (2004). Soziale Arbeit als Beruf. Juventa.",
+    "Heiner, M. (2006). Methodisches Handeln in der Sozialen Arbeit. In H.-U. Otto & H. Thiersch (Hrsg.), Handbuch Soziale Arbeit (3. Aufl., S. 896-907). Luchterhand.",
+    "Reimann, G. (2013). Professionelles Handeln und Selbstreflexion in der Sozialen Arbeit. In G. Reimann-Bernhardt (Hrsg.), Reflexive Soziale Arbeit (S. 15-32). VS Verlag.",
+    "Muller, W. (2012). Burnout-Pravention in der Sozialen Arbeit. Kohlhammer."
+  ],
+  outro: [
+    "Dupuis, M., Hahn, K., & Wigger, L. (2017). Ethos in der Padagogik: Eine professionelle Haltung reflektieren und ausbilden. Verlag Barbara Budrich.",
+    "Bock, T., & Roh, D. (2017). Professionelle Beziehungsgestaltung in der Sozialen Arbeit. Beltz Juventa."
+  ]
+};
+
 // --- INTERAKTIVE KOMPONENTEN (Optimierte Animationen) ---
 
 const IntroCover = () => (
@@ -349,6 +434,11 @@ const IntroCover = () => (
       <div className="absolute inset-0 bg-blue-500 rounded-full opacity-20 animate-pulse-10s"></div>
       <div className="absolute inset-8 bg-emerald-500 rounded-full opacity-20 animate-pulse-10s" style={{animationDelay: '1s'}}></div>
       <div className="absolute inset-16 bg-indigo-500 rounded-full opacity-20 animate-pulse-10s" style={{animationDelay: '2s'}}></div>
+      <div className="absolute inset-0 rounded-full border border-white/20 animate-shimmer-10s motion-reduce:animate-none"></div>
+      <div className="absolute inset-0 animate-orbit-10s motion-reduce:animate-none">
+        <span className="absolute top-2 left-1/2 -translate-x-1/2 h-3 w-3 rounded-full bg-white/80 shadow-[0_0_18px_rgba(255,255,255,0.8)]"></span>
+        <span className="absolute bottom-3 left-1/2 -translate-x-1/2 h-2.5 w-2.5 rounded-full bg-blue-200/90 shadow-[0_0_12px_rgba(147,197,253,0.8)]"></span>
+      </div>
       <div className="absolute inset-0 flex items-center justify-center z-10">
         <Anchor size={120} className="text-white drop-shadow-2xl animate-glow-10s" />
       </div>
@@ -506,8 +596,10 @@ const RogersTriangle = () => (
       <div className="absolute bottom-0 right-0 animate-float-10s" style={{animationDelay: '1s'}}>
          <div className="bg-emerald-900/90 px-6 py-3 rounded-xl border-2 border-emerald-400 text-2xl font-bold text-emerald-50 shadow-lg">Akzeptanz</div>
       </div>
-      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 animate-float-10s" style={{animationDelay: '2s'}}>
-         <div className="bg-emerald-900/90 px-6 py-3 rounded-xl border-2 border-emerald-400 text-2xl font-bold text-emerald-50 shadow-lg">Kongruenz</div>
+      <div className="absolute top-0 left-1/2 transform -translate-x-1/2">
+         <div className="animate-float-10s" style={{animationDelay: '2s'}}>
+           <div className="bg-emerald-900/90 px-6 py-3 rounded-xl border-2 border-emerald-400 text-2xl font-bold text-emerald-50 shadow-lg">Kongruenz</div>
+         </div>
       </div>
       
       {/* Verbindungslinien */}
@@ -677,15 +769,21 @@ const OutroSummary = () => (
   <div className="flex flex-col items-center gap-10">
      <div className="relative w-80 h-80 flex items-center justify-center">
         <div className="absolute inset-0 bg-white/5 rounded-full animate-pulse-10s"></div>
-        {/* 3 Kreise vereinen sich */}
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-amber-500/20 w-40 h-40 rounded-full border-4 border-amber-500 flex items-center justify-center animate-float-10s">
-           <Shield size={40} className="text-amber-200" />
+        {/* 3 Kreise gleichmäßig um das Zentrum angeordnet */}
+        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2" style={{ marginTop: '-96px' }}>
+          <div className="bg-amber-500/20 w-40 h-40 rounded-full border-4 border-amber-500 flex items-center justify-center animate-float-10s">
+            <Shield size={40} className="text-amber-200" />
+          </div>
         </div>
-        <div className="absolute bottom-0 left-0 bg-emerald-500/20 w-40 h-40 rounded-full border-4 border-emerald-500 flex items-center justify-center animate-float-10s" style={{animationDelay: '1s'}}>
-           <Heart size={40} className="text-emerald-200" />
+        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2" style={{ marginLeft: '-84px', marginTop: '56px' }}>
+          <div className="bg-emerald-500/20 w-40 h-40 rounded-full border-4 border-emerald-500 flex items-center justify-center animate-float-10s" style={{animationDelay: '1s'}}>
+            <Heart size={40} className="text-emerald-200" />
+          </div>
         </div>
-        <div className="absolute bottom-0 right-0 bg-indigo-500/20 w-40 h-40 rounded-full border-4 border-indigo-500 flex items-center justify-center animate-float-10s" style={{animationDelay: '2s'}}>
-           <Brain size={40} className="text-indigo-200" />
+        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2" style={{ marginLeft: '84px', marginTop: '56px' }}>
+          <div className="bg-indigo-500/20 w-40 h-40 rounded-full border-4 border-indigo-500 flex items-center justify-center animate-float-10s" style={{animationDelay: '2s'}}>
+            <Brain size={40} className="text-indigo-200" />
+          </div>
         </div>
         
         {/* Zentrum */}
@@ -758,6 +856,92 @@ export default function PresentationApp() {
     } else {
       setPwError('Falsches Passwort');
     }
+  };
+
+  const downloadHandoutPdf = () => {
+    const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const margin = 44;
+    const contentWidth = pageWidth - margin * 2;
+    const bottomLimit = pageHeight - margin;
+    let y = margin;
+
+    const ensureSpace = (neededHeight = 16) => {
+      if (y + neededHeight > bottomLimit) {
+        doc.addPage();
+        y = margin;
+      }
+    };
+
+    const drawWrappedText = (text, options = {}) => {
+      const {
+        fontSize = 11,
+        lineHeight = 15,
+        indent = 0,
+        extraSpacing = 6,
+        style = 'normal'
+      } = options;
+      doc.setFont('helvetica', style);
+      doc.setFontSize(fontSize);
+      const lines = doc.splitTextToSize(text, contentWidth - indent);
+      lines.forEach((line) => {
+        ensureSpace(lineHeight);
+        doc.text(line, margin + indent, y);
+        y += lineHeight;
+      });
+      y += extraSpacing;
+    };
+
+    const drawHeading = (text, level = 1) => {
+      const config = level === 1
+        ? { fontSize: 16, lineHeight: 20, extraSpacing: 10 }
+        : { fontSize: 13, lineHeight: 17, extraSpacing: 8 };
+      drawWrappedText(text, { ...config, style: 'bold' });
+    };
+
+    drawHeading("Handout: Grundlagen der Professionalisierung und Berufsethik", 1);
+    drawWrappedText("Wiki, theoretische Hintergrunde und Quellen (APA 7).");
+
+    const wikiSections = presentationData.slice(1);
+    wikiSections.forEach((section, sectionIndex) => {
+      drawHeading(`${section.speaker}: ${section.topic}`, 2);
+
+      section.wiki
+        .split('\n')
+        .map((line) => line.trim())
+        .filter(Boolean)
+        .forEach((line) => {
+          drawWrappedText(line, { fontSize: 10.5, lineHeight: 14, extraSpacing: 2 });
+        });
+
+      drawWrappedText("Kernpunkte:", { fontSize: 11.5, lineHeight: 15, style: 'bold', extraSpacing: 4 });
+      section.slides.forEach((slide) => {
+        drawWrappedText(`- ${slide.headline}: ${slide.sub}`, { fontSize: 10.5, lineHeight: 14, indent: 10, extraSpacing: 2 });
+      });
+
+      const references = sectionReferences[section.id] || [];
+      if (references.length > 0) {
+        drawWrappedText("Quellen zu diesem Teil (APA 7):", { fontSize: 11.5, lineHeight: 15, style: 'bold', extraSpacing: 4 });
+        references.forEach((reference) => {
+          drawWrappedText(`- ${reference}`, { fontSize: 9.8, lineHeight: 13, indent: 10, extraSpacing: 1 });
+        });
+      }
+
+      if (sectionIndex < wikiSections.length - 1) {
+        y += 6;
+        ensureSpace(18);
+      }
+    });
+
+    doc.addPage();
+    y = margin;
+    drawHeading("Gesamtliteratur (APA 7)", 1);
+    apaReferences.forEach((reference) => {
+      drawWrappedText(`- ${reference}`, { fontSize: 10, lineHeight: 13, indent: 10, extraSpacing: 1 });
+    });
+
+    doc.save("handout-grundlagen-professionalisierung-berufsethik.pdf");
   };
 
   if (!authorized) {
@@ -847,6 +1031,16 @@ export default function PresentationApp() {
                   style={{ fontSize: 'clamp(1.1rem, 1.8vw + 0.6rem, 2.1rem)' }}>
                  {activeData.subtitle}
                </p>
+               <ul className="mt-8 flex flex-wrap items-center justify-center gap-3" aria-label="Vortragsteam">
+                 {TEAM_MEMBERS.map((member) => (
+                   <li
+                     key={member}
+                     className="px-4 py-2 rounded-full text-sm md:text-base font-semibold text-white bg-white/15 border border-white/20 backdrop-blur animate-pulse-10s motion-reduce:animate-none"
+                   >
+                     {member}
+                   </li>
+                 ))}
+               </ul>
                <div className="mt-16 md:mt-20">
                  <IntroCover />
                </div>
@@ -943,15 +1137,23 @@ export default function PresentationApp() {
           <div className="bg-indigo-600 p-3 rounded-xl text-white shadow-lg shadow-indigo-200"><BookOpen size={28} /></div>
           <div>
              <h1 className="font-bold text-2xl leading-none text-slate-900">Wissensspeicher</h1>
-             <p className="text-sm text-slate-500 mt-1 font-medium">Modul 13: Professionelle Haltung</p>
+             <p className="text-sm text-slate-500 mt-1 font-medium">Grundlagen der Professionalisierung und Berufsethik</p>
           </div>
         </div>
-        <button 
-          onClick={() => setMode('present')}
-          className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-full font-bold shadow-xl shadow-indigo-200 transition transform hover:scale-105"
-        >
-          <Eye size={20} /> Zurück zur Präsentation
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={downloadHandoutPdf}
+            className="flex items-center gap-2 bg-slate-700 hover:bg-slate-800 text-white px-6 py-3 rounded-full font-bold shadow-lg transition"
+          >
+            <FileDown size={18} /> Handout als PDF
+          </button>
+          <button 
+            onClick={() => setMode('present')}
+            className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-full font-bold shadow-xl shadow-indigo-200 transition transform hover:scale-105"
+          >
+            <Eye size={20} /> Zurück zur Präsentation
+          </button>
+        </div>
       </div>
 
       <div className="max-w-5xl mx-auto p-8 md:p-16 space-y-16">
@@ -991,9 +1193,28 @@ export default function PresentationApp() {
           </div>
         ))}
 
-        <div className="border-t border-slate-200 pt-12 mt-16 text-center text-slate-400 text-sm font-medium">
-          <p>Quellen: Maja Heiner (2010), W. Müller (2025), Prof. Reimann-Bernhardt (2025), C. Rogers, J. Bowlby.</p>
-          <p className="mt-3">Erstellt für Modul 13 Prüfung.</p>
+        <div className="border-t border-slate-200 pt-12 mt-16">
+          <h3 className="font-bold text-lg text-slate-500 uppercase tracking-widest mb-6">Quellen (APA 7)</h3>
+          <div className="bg-white rounded-3xl p-8 md:p-10 shadow-sm border border-slate-200">
+            <div className="space-y-8">
+              {presentationData.slice(1).map((section) => {
+                const references = sectionReferences[section.id] || [];
+                if (references.length === 0) return null;
+
+                return (
+                  <div key={`refs-${section.id}`}>
+                    <h4 className="font-bold text-slate-800 mb-3">{section.speaker}: {section.topic}</h4>
+                    <ul className="space-y-2 text-slate-600 text-sm leading-relaxed">
+                      {references.map((reference, idx) => (
+                        <li key={`${section.id}-${idx}`}>{reference}</li>
+                      ))}
+                    </ul>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <p className="mt-6 text-center text-slate-400 text-sm font-medium">Erstellt für Prüfung: Grundlagen der Professionalisierung und Berufsethik.</p>
         </div>
       </div>
     </div>

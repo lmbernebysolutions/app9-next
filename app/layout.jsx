@@ -2,7 +2,7 @@ import Script from "next/script";
 import "./globals.css";
 
 export const metadata = {
-  title: "Professionelle Haltung – Präsentation",
+  title: "Grundlagen der Professionalisierung und Berufsethik – Präsentation",
   description: "Standalone Präsentation (App9) als Next.js-Seite",
 };
 
