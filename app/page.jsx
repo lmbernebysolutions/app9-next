@@ -281,7 +281,7 @@ const presentationData = [
           "Wir sind subjektiv (Biografie, Werte).",
           "Gefahr: Persönliche Kränkung (Das 'Selbst').",
           "Ziel: Zurück in die professionelle 'Rolle'.",
-          "In der Reflexion Selbst und Rolle bewusst auseinanderhalten (Ansatz u. a. bei Dahrendorf)."
+          "In der Reflexion Selbst und soziale Rolle bewusst auseinanderhalten (vgl. Dahrendorf, 2006: Homo sociologicus)."
         ],
         interactive: "role-switch"
       },
@@ -318,6 +318,7 @@ const presentationData = [
     ],
     wiki: `
       Person D (Blick nach Innen):
+      0. Theoretischer Anker: Dahrendorf (2006) fasst die soziale Rolle als gesellschaftlich vorgegebenes Erwartungsbündel an Positionen; der homo sociologicus macht sichtbar, wie professionelles Handeln von Rollenerwartungen strukturiert wird und warum Distanz zwischen Person und Rolle reflexiv geklärt werden muss.
       1. Selbst vs. Rolle: Konflikte entstehen oft, wenn wir uns privat angegriffen fühlen. Reflexion trennt das wieder.
       2. Trigger: Individuelle Auslöser für Stress. Führen oft zu "Dominanzverhalten" (Maja Heiner) oder Machtmissbrauch, um eigene Ohnmacht nicht zu spüren.
       3. Re-Inszenierung: Wir dürfen nicht in die Rolle fallen, die der Jugendliche erwartet (der strafende Erwachsene), sondern müssen eine korrigierende Erfahrung bieten (Passungsmodell).
@@ -361,15 +362,24 @@ const presentationData = [
   }
 ];
 
+/** Kurztexte nur für den PDF-Handout-Export (Folien bleiben unverändert). */
+const HANDOUT_SOURCE_NOTICE = [
+  "Hinweise zur Quellenlage (Handout): Die gezeigten Folien/PowerPoint-Folien sind unverändert; dieses Handout ergänzt Transparenz zur Literatur.",
+  "Als Primär- und Fachbuchquellen dienen die nachfolgenden APA-7-Einträge. Wikipedia-, Klinik- und Anbieter-URLs (z. B. LWL, Studio 3) sind nur orientierend und ersetzen keine wissenschaftliche Primärbelege.",
+  "Die Gesamtliteratur wurde dort bereinigt, wo Titel/Verlage zuvor eindeutig von Verlags- und Fachportalangaben abwichen (z. B. Bierhoff & Wagner, McDonnell 2010, Dupuis als Hrsg.-Band, Traumapädagogik-Standardwerk statt nicht verifizierbarer Angabe). Einzelne Einträge (z. B. Auflage/Jahr, Seiten in Sammelwerken) sollten bei Bedarf einmal im Hochschul-OPAC oder bei DNB/Reinhardt gegengelesen werden.",
+];
+
 const apaReferences = [
   "American Psychological Association. (2020). Publication manual of the American Psychological Association (7th ed.). Author.",
-  "Bierhoff, H.-W., & Wagner, U. (1998). Aggression und Gewalt in der Gesellschaft. Westdeutscher Verlag.",
-  "Bock, T., & Roh, D. (2017). Professionelle Beziehungsgestaltung in der Sozialen Arbeit. Beltz Juventa.",
-  "Bock, T., & Seithe, M. (2017). Traumapadagogik in der Praxis: Grundlagen und Methoden fur die Arbeit mit Kindern und Jugendlichen. Beltz Juventa.",
-  "Bohnisch, L. (2010). Lebensbewaltigung: Ein sozialpadagogisches Konzept. Beltz Juventa.",
+  "Bierhoff, H.-W., & Wagner, U. (Hrsg.). (1998). Aggression und Gewalt: Phänomene, Ursachen und Interventionen. Kohlhammer.",
+  "Bock, T., & Röh, D. (2017). Professionelle Beziehungsgestaltung in der Sozialen Arbeit. Beltz Juventa.",
+  "Bausum, J., Besser, L.-U., Kühn, M., & Weiß, W. (2023). Traumapädagogik: Grundlagen, Arbeitsfelder und Methoden für die pädagogische Praxis (4., überarb. Aufl.). Beltz Juventa.",
+  "Bohnisch, L. (2010). Lebensbewältigung: Ein sozialpädagogisches Konzept. Beltz Juventa.",
   "Bowlby, J. (1988). A secure base: Parent-child attachment and healthy human development. Basic Books.",
   "Brisch, K. H. (2011). Bindungsstörungen: Von der Bindungstheorie zur Therapie (4. Aufl.). Klett-Cotta.",
-  "Dupuis, M., Hahn, K., & Wigger, L. (2017). Ethos in der Pädagogik: Eine professionelle Haltung reflektieren und ausbilden. Verlag Barbara Budrich.",
+  "Dahrendorf, R. (2006). Homo sociologicus: Ein Versuch zur Geschichte, Bedeutung und Kritik der Kategorie der sozialen Rolle (10. Aufl.). VS Verlag für Sozialwissenschaften.",
+  "Dewe, B., & Otto, H.-U. (2018). Professionalität. In H.-U. Otto & H. Thiersch (Hrsg.), Handbuch Soziale Arbeit (6., überarb. Aufl., S. 116–126). Ernst Reinhardt Verlag.",
+  "Dupuis, M., Hahn, K., & Wigger, L. (Hrsg.). (2017). Ethos in der Pädagogik: Eine professionelle Haltung reflektieren und ausbilden. Verlag Barbara Budrich.",
   "Goldbeck, L., & Ellerkamp, T. (2012). Psychotraumatologie des Kindes- und Jugendalters. In L. Goldbeck (Hrsg.), Psychische Störungen im Kindes- und Jugendalter (S. 205-232). Kohlhammer.",
   "Gordon, T. (1970). Parent effectiveness training: The no-lose program for raising responsible children. Wyden.",
   "Gordon, T. (2004). Familienkonferenz: Die Lösung von Konflikten zwischen Eltern und Kind (überarb. Neuausg.). Heyne.",
@@ -380,27 +390,29 @@ const apaReferences = [
   "Kecojevic, K. (2023). Unsichere Bindung in der Adoleszenz (Dissertation). Ludwig-Maximilians-Universität München. https://edoc.ub.uni-muenchen.de/34494/1/Kecojevic_Katarina.pdf",
   "Klonsky, E. D. (2007). The functions of deliberate self-injury: A review of the evidence. Clinical Psychology Review, 27(2), 226-239.",
   "Kühne, A. (2017). Theoretische Reflexionen zur professionellen Haltung in der Sozialen Arbeit mit Geflüchteten. Springer VS.",
-  "LWL-Klinik Paderborn. (n.d.). Borderline, selbstverletzendes Verhalten (SVV) & Impulsstorungen. https://www.lwl-klinik-paderborn.de/de/fuer-patienten-angehoerige/informationen-zu-erkrankungen-erwachsenenpsychiatrie/borderline-selbstverletzendes-verhalten-svv-impulsstoerungen/",
-  "McDonnell, A. A. (2010). Managing aggressive behaviour in care settings: Understanding the Low Arousal Approach. Wiley-Blackwell.",
+  "LWL-Klinik Paderborn. (n.d.). Borderline, selbstverletzendes Verhalten (SVV) & Impulsstörungen. https://www.lwl-klinik-paderborn.de/de/fuer-patienten-angehoerige/informationen-zu-erkrankungen-erwachsenenpsychiatrie/borderline-selbstverletzendes-verhalten-svv-impulsstoerungen/",
+  "McDonnell, A. A. (2010). Managing aggressive behaviour in care settings: Understanding and applying low arousal approaches. Wiley-Blackwell.",
   "McDonnell, A. A. (2019). The Low Arousal Approach: Restrictive practices, behaviour and wellbeing. Learning Disability Practice, 22(2), 26-31.",
-  "Müller, W. (2012). Burnout-Prävention in der Sozialen Arbeit. Kohlhammer.",
+  "Müller, W. (2012). Burnout in der Sozialen Arbeit: Prävention und Intervention (2., aktualisierte Aufl.). Kohlhammer.",
   "Reimann, G. (2013). Professionelles Handeln und Selbstreflexion in der Sozialen Arbeit. In G. Reimann-Bernhardt (Hrsg.), Reflexive Soziale Arbeit (S. 15-32). VS Verlag.",
   "Ritscher, W. (2008). Rezension zu \"Soziale Arbeit als Beruf\" von Maja Heiner. socialnet Rezensionen. https://www.socialnet.de/rezensionen/6613.php",
   "Rogers, C. R. (1957). The necessary and sufficient conditions of therapeutic personality change. Journal of Consulting Psychology, 21(2), 95-103.",
   "Rogers, C. R. (1961). On becoming a person: A therapist's view of psychotherapy. Houghton Mifflin.",
   "Sarafoff, A., & Wesche, R. (2011). Selbstverletzendes Verhalten: Grundlagen, Diagnostik und Therapie (2. Aufl.). Beltz.",
   "Scheff, T. J. (2003). Shame in self and society. Symbolic Interaction, 26(2), 239-262.",
+  "Schmidt-Grunert, M. (1997). Soziale Arbeit mit Gruppen: Eine Einführung (4. Aufl.). Juventa.",
   "Silkenbeumer, M. (2000). Aggression und Gewalt im Kindes- und Jugendalter. Juventa.",
   "Studio 3 Training Systems. (2016). What is the Low Arousal Approach? https://www.studio3.org/training-and-coaching/low-arousal-training",
   "Tausch, R., & Tausch, A.-M. (2017). Erziehungspsychologie: Begegnung von Person zu Person (14. Aufl.). Beltz.",
   "Walsh, F. (2015). Strengthening family resilience (3rd ed.). Guilford Press.",
   "Yerkes, R. M., & Dodson, J. D. (1908). The relation of strength of stimulus to rapidity of habit-formation. Journal of Comparative Neurology and Psychology, 18, 459-482.",
+  "Zwengel, A. (2025). Mikrosoziologie, interpretatives Paradigma und qualitative Forschung in der Sozialen Arbeit (2. Aufl.). Beltz Juventa.",
   "Gordon-Modell. (2025, January 15). In Wikipedia. https://de.wikipedia.org/wiki/Gordon-Modell"
 ];
 
 const sectionReferences = {
   "part-a": [
-    "Dupuis, M., Hahn, K., & Wigger, L. (2017). Ethos in der Pädagogik: Eine professionelle Haltung reflektieren und ausbilden. Verlag Barbara Budrich.",
+    "Dupuis, M., Hahn, K., & Wigger, L. (Hrsg.). (2017). Ethos in der Pädagogik: Eine professionelle Haltung reflektieren und ausbilden. Verlag Barbara Budrich.",
     "Kühne, A. (2017). Theoretische Reflexionen zur professionellen Haltung in der Sozialen Arbeit mit Geflüchteten. Springer VS.",
     "Bowlby, J. (1988). A secure base: Parent-child attachment and healthy human development. Basic Books.",
     "Brisch, K. H. (2011). Bindungsstörungen: Von der Bindungstheorie zur Therapie (4. Aufl.). Klett-Cotta.",
@@ -408,28 +420,32 @@ const sectionReferences = {
     "Yerkes, R. M., & Dodson, J. D. (1908). The relation of strength of stimulus to rapidity of habit-formation. Journal of Comparative Neurology and Psychology, 18, 459-482."
   ],
   "part-b": [
-    "McDonnell, A. A. (2010). Managing aggressive behaviour in care settings: Understanding the Low Arousal Approach. Wiley-Blackwell.",
+    "McDonnell, A. A. (2010). Managing aggressive behaviour in care settings: Understanding and applying low arousal approaches. Wiley-Blackwell.",
     "McDonnell, A. A. (2019). The Low Arousal Approach: Restrictive practices, behaviour and wellbeing. Learning Disability Practice, 22(2), 26-31.",
     "Gordon, T. (1970). Parent effectiveness training: The no-lose program for raising responsible children. Wyden.",
     "Gordon, T. (2004). Familienkonferenz: Die Lösung von Konflikten zwischen Eltern und Kind (überarb. Neuausg.). Heyne.",
-    "Bohnisch, L. (2010). Lebensbewaltigung: Ein sozialpadagogisches Konzept. Beltz Juventa."
+    "Bohnisch, L. (2010). Lebensbewältigung: Ein sozialpädagogisches Konzept. Beltz Juventa."
   ],
   "part-c": [
     "Rogers, C. R. (1957). The necessary and sufficient conditions of therapeutic personality change. Journal of Consulting Psychology, 21(2), 95-103.",
     "Rogers, C. R. (1961). On becoming a person: A therapist's view of psychotherapy. Houghton Mifflin.",
     "Scheff, T. J. (2003). Shame in self and society. Symbolic Interaction, 26(2), 239-262.",
     "Hilgers, M. (2010). Scham: Gesichter eines Affekts. Vandenhoeck & Ruprecht.",
-    "Bock, T., & Seithe, M. (2017). Traumapadagogik in der Praxis: Grundlagen und Methoden fur die Arbeit mit Kindern und Jugendlichen. Beltz Juventa."
+    "Bausum, J., Besser, L.-U., Kühn, M., & Weiß, W. (2023). Traumapädagogik: Grundlagen, Arbeitsfelder und Methoden für die pädagogische Praxis (4., überarb. Aufl.). Beltz Juventa."
   ],
   "part-d": [
+    "Dahrendorf, R. (2006). Homo sociologicus: Ein Versuch zur Geschichte, Bedeutung und Kritik der Kategorie der sozialen Rolle (10. Aufl.). VS Verlag für Sozialwissenschaften.",
+    "Dewe, B., & Otto, H.-U. (2018). Professionalität. In H.-U. Otto & H. Thiersch (Hrsg.), Handbuch Soziale Arbeit (6., überarb. Aufl., S. 116–126). Ernst Reinhardt Verlag.",
+    "Zwengel, A. (2025). Mikrosoziologie, interpretatives Paradigma und qualitative Forschung in der Sozialen Arbeit (2. Aufl.). Beltz Juventa.",
+    "Schmidt-Grunert, M. (1997). Soziale Arbeit mit Gruppen: Eine Einführung (4. Aufl.). Juventa.",
     "Heiner, M. (2004). Soziale Arbeit als Beruf. Juventa.",
     "Heiner, M. (2006). Methodisches Handeln in der Sozialen Arbeit. In H.-U. Otto & H. Thiersch (Hrsg.), Handbuch Soziale Arbeit (3. Aufl., S. 896-907). Luchterhand.",
     "Reimann, G. (2013). Professionelles Handeln und Selbstreflexion in der Sozialen Arbeit. In G. Reimann-Bernhardt (Hrsg.), Reflexive Soziale Arbeit (S. 15-32). VS Verlag.",
-    "Müller, W. (2012). Burnout-Prävention in der Sozialen Arbeit. Kohlhammer."
+    "Müller, W. (2012). Burnout in der Sozialen Arbeit: Prävention und Intervention (2., aktualisierte Aufl.). Kohlhammer."
   ],
   outro: [
-    "Dupuis, M., Hahn, K., & Wigger, L. (2017). Ethos in der Pädagogik: Eine professionelle Haltung reflektieren und ausbilden. Verlag Barbara Budrich.",
-    "Bock, T., & Roh, D. (2017). Professionelle Beziehungsgestaltung in der Sozialen Arbeit. Beltz Juventa."
+    "Dupuis, M., Hahn, K., & Wigger, L. (Hrsg.). (2017). Ethos in der Pädagogik: Eine professionelle Haltung reflektieren und ausbilden. Verlag Barbara Budrich.",
+    "Bock, T., & Röh, D. (2017). Professionelle Beziehungsgestaltung in der Sozialen Arbeit. Beltz Juventa."
   ]
 };
 
@@ -929,7 +945,7 @@ export default function PresentationApp() {
     };
 
     drawHeading(`Handout: ${TALK_TOPIC}`, 1);
-    drawWrappedText("Wiki, theoretische Hintergründe und Quellen (APA 7).");
+    drawWrappedText("Wiki, theoretische Hintergründe und Quellen (APA 7). Am Ende: Transparenz zur Quellenlage und Gesamtliteratur.");
 
     const wikiSections = presentationData.slice(1);
     wikiSections.forEach((section, sectionIndex) => {
@@ -967,6 +983,13 @@ export default function PresentationApp() {
     drawHeading("Gesamtliteratur (APA 7)", 1);
     apaReferences.forEach((reference) => {
       drawWrappedText(`- ${reference}`, { fontSize: 10, lineHeight: 13, indent: 10, extraSpacing: 1 });
+    });
+
+    doc.addPage();
+    y = margin;
+    drawHeading("Transparenz (Quellen)", 1);
+    HANDOUT_SOURCE_NOTICE.forEach((paragraph) => {
+      drawWrappedText(paragraph, { fontSize: 10, lineHeight: 14, extraSpacing: 5 });
     });
 
     doc.save("handout-grundlagen-professionalisierung-berufsethik.pdf");
