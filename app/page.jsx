@@ -341,6 +341,12 @@ const presentationData = [
         ],
         interactive: "outro-summary",
         quote: "„Professionelle Haltung ist kein Zustand, sondern ein Prozess.“"
+      },
+      {
+        headline: "Danke für eure Aufmerksamkeit",
+        sub: "Alle Inhalte und Quellen findet ihr in der Wiki- & Quellen-Ansicht",
+        bullets: [],
+        interactive: "thanks-cover"
       }
     ],
     wiki: `
@@ -445,6 +451,27 @@ const IntroCover = () => (
     </div>
     <div className="text-xl font-light text-slate-300 bg-black/20 px-6 py-3 rounded-full border border-white/10">
       Start mit [Pfeiltasten] oder [Leertaste]
+    </div>
+  </div>
+);
+
+const ThanksCover = () => (
+  <div className="flex flex-col items-center justify-center h-full">
+    <div className="relative w-80 h-80 mb-8 animate-float-10s">
+      <div className="absolute inset-0 bg-indigo-500 rounded-full opacity-20 animate-pulse-10s"></div>
+      <div className="absolute inset-8 bg-emerald-500 rounded-full opacity-20 animate-pulse-10s" style={{animationDelay: '1s'}}></div>
+      <div className="absolute inset-16 bg-sky-500 rounded-full opacity-20 animate-pulse-10s" style={{animationDelay: '2s'}}></div>
+      <div className="absolute inset-0 rounded-full border border-white/20 animate-shimmer-10s"></div>
+      <div className="absolute inset-0 animate-orbit-10s">
+        <span className="absolute top-2 left-1/2 -translate-x-1/2 h-3 w-3 rounded-full bg-white/80 shadow-[0_0_18px_rgba(255,255,255,0.8)]"></span>
+        <span className="absolute bottom-3 left-1/2 -translate-x-1/2 h-2.5 w-2.5 rounded-full bg-emerald-200/90 shadow-[0_0_12px_rgba(110,231,183,0.8)]"></span>
+      </div>
+      <div className="absolute inset-0 flex items-center justify-center z-10">
+        <BookOpen size={112} className="text-white drop-shadow-2xl animate-glow-10s" />
+      </div>
+    </div>
+    <div className="text-lg md:text-xl font-light text-slate-200 bg-black/25 px-6 py-3 rounded-full border border-white/10">
+      Weitere Infos: Wiki & Quellen
     </div>
   </div>
 );
@@ -1062,12 +1089,23 @@ export default function PresentationApp() {
 
                 <ul className="space-y-8">
                   {activeSlideContent.bullets.map((txt, i) => (
-                    <li key={i} className="flex items-start gap-6 text-2xl md:text-3xl text-white font-medium drop-shadow-sm">
-                      <ChevronRight className="shrink-0 mt-1 opacity-70" size={40} />
+                    <li key={i} className="flex items-center gap-6 text-2xl md:text-3xl text-white font-medium drop-shadow-sm">
+                      <ChevronRight className="shrink-0 opacity-70" size={40} />
                       <span>{txt}</span>
                     </li>
                   ))}
                 </ul>
+
+                {activeSlideContent.interactive === 'thanks-cover' && (
+                  <div className="mt-4">
+                    <button
+                      onClick={() => setMode('wiki')}
+                      className="flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white px-8 py-4 rounded-full font-bold text-lg transition backdrop-blur border border-white/20 shadow-lg"
+                    >
+                      <BookOpen size={22} /> Wiki & Quellen öffnen
+                    </button>
+                  </div>
+                )}
 
                 {activeSlideContent.quote && (
                   <div className="mt-12 p-8 border-l-[12px] border-white/20 bg-white/5 rounded-r-2xl italic text-2xl md:text-3xl text-white/90 font-serif leading-relaxed">
@@ -1093,6 +1131,7 @@ export default function PresentationApp() {
                    {activeSlideContent.interactive === 'heiner-slider' && <HeinerSlider />}
                    {activeSlideContent.interactive === 'hygiene-battery' && <HygieneBattery />}
                    {activeSlideContent.interactive === 'outro-summary' && <OutroSummary />}
+                   {activeSlideContent.interactive === 'thanks-cover' && <ThanksCover />}
                    
                    {/* Fallback */}
                    {activeSlideContent.interactive === 'intro-cover' && <div/>}
