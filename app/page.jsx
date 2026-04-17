@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 
 const ACCESS_PASSWORD = 'Vortrag2025!';
-const TALK_TOPIC = "Professsionelle Haltung im Umgang mit aggresivem oder grenzverletzendem Verhalten";
+const TALK_TOPIC = "Professionelle Haltung im Umgang mit aggressivem oder grenzverletzendem Verhalten";
 
 // --- STYLES & ANIMATIONS (10s Loops - Logisch & Ruhig) ---
 const styles = `
@@ -368,22 +368,22 @@ const apaReferences = [
   "Bock, T., & Seithe, M. (2017). Traumapadagogik in der Praxis: Grundlagen und Methoden fur die Arbeit mit Kindern und Jugendlichen. Beltz Juventa.",
   "Bohnisch, L. (2010). Lebensbewaltigung: Ein sozialpadagogisches Konzept. Beltz Juventa.",
   "Bowlby, J. (1988). A secure base: Parent-child attachment and healthy human development. Basic Books.",
-  "Brisch, K. H. (2011). Bindungsstorungen: Von der Bindungstheorie zur Therapie (4. Aufl.). Klett-Cotta.",
-  "Dupuis, M., Hahn, K., & Wigger, L. (2017). Ethos in der Padagogik: Eine professionelle Haltung reflektieren und ausbilden. Verlag Barbara Budrich.",
-  "Goldbeck, L., & Ellerkamp, T. (2012). Psychotraumatologie des Kindes- und Jugendalters. In L. Goldbeck (Hrsg.), Psychische Storungen im Kindes- und Jugendalter (S. 205-232). Kohlhammer.",
+  "Brisch, K. H. (2011). Bindungsstörungen: Von der Bindungstheorie zur Therapie (4. Aufl.). Klett-Cotta.",
+  "Dupuis, M., Hahn, K., & Wigger, L. (2017). Ethos in der Pädagogik: Eine professionelle Haltung reflektieren und ausbilden. Verlag Barbara Budrich.",
+  "Goldbeck, L., & Ellerkamp, T. (2012). Psychotraumatologie des Kindes- und Jugendalters. In L. Goldbeck (Hrsg.), Psychische Störungen im Kindes- und Jugendalter (S. 205-232). Kohlhammer.",
   "Gordon, T. (1970). Parent effectiveness training: The no-lose program for raising responsible children. Wyden.",
-  "Gordon, T. (2004). Familienkonferenz: Die Losung von Konflikten zwischen Eltern und Kind (uberarb. Neuausg.). Heyne.",
+  "Gordon, T. (2004). Familienkonferenz: Die Lösung von Konflikten zwischen Eltern und Kind (überarb. Neuausg.). Heyne.",
   "Heiner, M. (2004). Soziale Arbeit als Beruf. Juventa.",
   "Heiner, M. (2006). Methodisches Handeln in der Sozialen Arbeit. In H.-U. Otto & H. Thiersch (Hrsg.), Handbuch Soziale Arbeit (3. Aufl., S. 896-907). Luchterhand.",
   "Hilgers, M. (2010). Scham: Gesichter eines Affekts. Vandenhoeck & Ruprecht.",
   "Ich-Botschaft. (2025, January 20). In Wikipedia. https://de.wikipedia.org/wiki/Ich-Botschaft",
-  "Kecojevic, K. (2023). Unsichere Bindung in der Adoleszenz (Dissertation). Ludwig-Maximilians-Universitat Munchen. https://edoc.ub.uni-muenchen.de/34494/1/Kecojevic_Katarina.pdf",
+  "Kecojevic, K. (2023). Unsichere Bindung in der Adoleszenz (Dissertation). Ludwig-Maximilians-Universität München. https://edoc.ub.uni-muenchen.de/34494/1/Kecojevic_Katarina.pdf",
   "Klonsky, E. D. (2007). The functions of deliberate self-injury: A review of the evidence. Clinical Psychology Review, 27(2), 226-239.",
-  "Kuhne, A. (2017). Theoretische Reflexionen zur professionellen Haltung in der Sozialen Arbeit mit Gefluchteten. Springer VS.",
+  "Kühne, A. (2017). Theoretische Reflexionen zur professionellen Haltung in der Sozialen Arbeit mit Geflüchteten. Springer VS.",
   "LWL-Klinik Paderborn. (n.d.). Borderline, selbstverletzendes Verhalten (SVV) & Impulsstorungen. https://www.lwl-klinik-paderborn.de/de/fuer-patienten-angehoerige/informationen-zu-erkrankungen-erwachsenenpsychiatrie/borderline-selbstverletzendes-verhalten-svv-impulsstoerungen/",
   "McDonnell, A. A. (2010). Managing aggressive behaviour in care settings: Understanding the Low Arousal Approach. Wiley-Blackwell.",
   "McDonnell, A. A. (2019). The Low Arousal Approach: Restrictive practices, behaviour and wellbeing. Learning Disability Practice, 22(2), 26-31.",
-  "Muller, W. (2012). Burnout-Pravention in der Sozialen Arbeit. Kohlhammer.",
+  "Müller, W. (2012). Burnout-Prävention in der Sozialen Arbeit. Kohlhammer.",
   "Reimann, G. (2013). Professionelles Handeln und Selbstreflexion in der Sozialen Arbeit. In G. Reimann-Bernhardt (Hrsg.), Reflexive Soziale Arbeit (S. 15-32). VS Verlag.",
   "Ritscher, W. (2008). Rezension zu \"Soziale Arbeit als Beruf\" von Maja Heiner. socialnet Rezensionen. https://www.socialnet.de/rezensionen/6613.php",
   "Rogers, C. R. (1957). The necessary and sufficient conditions of therapeutic personality change. Journal of Consulting Psychology, 21(2), 95-103.",
@@ -400,18 +400,18 @@ const apaReferences = [
 
 const sectionReferences = {
   "part-a": [
-    "Dupuis, M., Hahn, K., & Wigger, L. (2017). Ethos in der Padagogik: Eine professionelle Haltung reflektieren und ausbilden. Verlag Barbara Budrich.",
-    "Kuhne, A. (2017). Theoretische Reflexionen zur professionellen Haltung in der Sozialen Arbeit mit Gefluchteten. Springer VS.",
+    "Dupuis, M., Hahn, K., & Wigger, L. (2017). Ethos in der Pädagogik: Eine professionelle Haltung reflektieren und ausbilden. Verlag Barbara Budrich.",
+    "Kühne, A. (2017). Theoretische Reflexionen zur professionellen Haltung in der Sozialen Arbeit mit Geflüchteten. Springer VS.",
     "Bowlby, J. (1988). A secure base: Parent-child attachment and healthy human development. Basic Books.",
-    "Brisch, K. H. (2011). Bindungsstorungen: Von der Bindungstheorie zur Therapie (4. Aufl.). Klett-Cotta.",
-    "Kecojevic, K. (2023). Unsichere Bindung in der Adoleszenz (Dissertation). Ludwig-Maximilians-Universitat Munchen. https://edoc.ub.uni-muenchen.de/34494/1/Kecojevic_Katarina.pdf",
+    "Brisch, K. H. (2011). Bindungsstörungen: Von der Bindungstheorie zur Therapie (4. Aufl.). Klett-Cotta.",
+    "Kecojevic, K. (2023). Unsichere Bindung in der Adoleszenz (Dissertation). Ludwig-Maximilians-Universität München. https://edoc.ub.uni-muenchen.de/34494/1/Kecojevic_Katarina.pdf",
     "Yerkes, R. M., & Dodson, J. D. (1908). The relation of strength of stimulus to rapidity of habit-formation. Journal of Comparative Neurology and Psychology, 18, 459-482."
   ],
   "part-b": [
     "McDonnell, A. A. (2010). Managing aggressive behaviour in care settings: Understanding the Low Arousal Approach. Wiley-Blackwell.",
     "McDonnell, A. A. (2019). The Low Arousal Approach: Restrictive practices, behaviour and wellbeing. Learning Disability Practice, 22(2), 26-31.",
     "Gordon, T. (1970). Parent effectiveness training: The no-lose program for raising responsible children. Wyden.",
-    "Gordon, T. (2004). Familienkonferenz: Die Losung von Konflikten zwischen Eltern und Kind (uberarb. Neuausg.). Heyne.",
+    "Gordon, T. (2004). Familienkonferenz: Die Lösung von Konflikten zwischen Eltern und Kind (überarb. Neuausg.). Heyne.",
     "Bohnisch, L. (2010). Lebensbewaltigung: Ein sozialpadagogisches Konzept. Beltz Juventa."
   ],
   "part-c": [
@@ -425,10 +425,10 @@ const sectionReferences = {
     "Heiner, M. (2004). Soziale Arbeit als Beruf. Juventa.",
     "Heiner, M. (2006). Methodisches Handeln in der Sozialen Arbeit. In H.-U. Otto & H. Thiersch (Hrsg.), Handbuch Soziale Arbeit (3. Aufl., S. 896-907). Luchterhand.",
     "Reimann, G. (2013). Professionelles Handeln und Selbstreflexion in der Sozialen Arbeit. In G. Reimann-Bernhardt (Hrsg.), Reflexive Soziale Arbeit (S. 15-32). VS Verlag.",
-    "Muller, W. (2012). Burnout-Pravention in der Sozialen Arbeit. Kohlhammer."
+    "Müller, W. (2012). Burnout-Prävention in der Sozialen Arbeit. Kohlhammer."
   ],
   outro: [
-    "Dupuis, M., Hahn, K., & Wigger, L. (2017). Ethos in der Padagogik: Eine professionelle Haltung reflektieren und ausbilden. Verlag Barbara Budrich.",
+    "Dupuis, M., Hahn, K., & Wigger, L. (2017). Ethos in der Pädagogik: Eine professionelle Haltung reflektieren und ausbilden. Verlag Barbara Budrich.",
     "Bock, T., & Roh, D. (2017). Professionelle Beziehungsgestaltung in der Sozialen Arbeit. Beltz Juventa."
   ]
 };
@@ -929,7 +929,7 @@ export default function PresentationApp() {
     };
 
     drawHeading(`Handout: ${TALK_TOPIC}`, 1);
-    drawWrappedText("Wiki, theoretische Hintergrunde und Quellen (APA 7).");
+    drawWrappedText("Wiki, theoretische Hintergründe und Quellen (APA 7).");
 
     const wikiSections = presentationData.slice(1);
     wikiSections.forEach((section, sectionIndex) => {

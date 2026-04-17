@@ -67,11 +67,11 @@ while ((wikiMatch = wikiRegex.exec(source)) !== null) {
 const buildEntries = () => {
   const entries = [];
   entries.push({
-    text: "Ressourcenblatt fur Kahoot-Quiz (1 Seite)",
+    text: "Ressourcenblatt für Kahoot-Quiz (1 Seite)",
     type: "title",
   });
   entries.push({
-    text: "Inhalte 1:1 aus der Prasentation (ohne Fragen), nur als Informationsquelle.",
+    text: "Inhalte 1:1 aus der Präsentation (ohne Fragen), nur als Informationsquelle.",
     type: "meta",
   });
 
