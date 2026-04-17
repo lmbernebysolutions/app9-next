@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 
 const ACCESS_PASSWORD = 'Vortrag2025!';
+const TALK_TOPIC = "Professsionelle Haltung im Umgang mit aggresivem oder grenzverletzendem Verhalten";
 
 // --- STYLES & ANIMATIONS (10s Loops - Logisch & Ruhig) ---
 const styles = `
@@ -106,12 +107,12 @@ const presentationData = [
     color: "bg-slate-900",
     text: "text-white",
     icon: <Users size={40} />,
-    title: "Professionelle Haltung",
-    subtitle: "Umgang mit aggressivem Verhalten in der Jugendhilfe",
+    title: TALK_TOPIC,
+    subtitle: "",
     slides: [
       {
-        headline: "Professionelle Haltung",
-        sub: "Im Umgang mit aggressivem & grenzverletzendem Verhalten",
+        headline: TALK_TOPIC,
+        sub: TALK_TOPIC,
         bullets: [
           "Nicht nur Technik, sondern Haltung.",
           "Sicherheit für Fachkräfte & Jugendliche.",
@@ -927,7 +928,7 @@ export default function PresentationApp() {
       drawWrappedText(text, { ...config, style: 'bold' });
     };
 
-    drawHeading("Handout: Grundlagen der Professionalisierung und Berufsethik", 1);
+    drawHeading(`Handout: ${TALK_TOPIC}`, 1);
     drawWrappedText("Wiki, theoretische Hintergrunde und Quellen (APA 7).");
 
     const wikiSections = presentationData.slice(1);
@@ -1051,13 +1052,15 @@ export default function PresentationApp() {
             <div className="text-center animate-[fadeIn_1s] px-4 md:px-10 lg:px-16">
                <div className="flex justify-center mb-10">{activeData.icon}</div>
                <h1 className="font-black text-white mb-5 leading-tight tracking-tight drop-shadow-xl"
-                   style={{ fontSize: 'clamp(2.2rem, 4.5vw + 0.9rem, 5rem)' }}>
+                   style={{ fontSize: 'clamp(1.8rem, 3.4vw + 0.8rem, 4rem)' }}>
                  {activeData.title}
                </h1>
-               <p className="text-white/90 font-light max-w-4xl mx-auto leading-snug"
-                  style={{ fontSize: 'clamp(1.1rem, 1.8vw + 0.6rem, 2.1rem)' }}>
-                 {activeData.subtitle}
-               </p>
+               {activeData.subtitle && (
+                 <p className="text-white/90 font-light max-w-4xl mx-auto leading-snug"
+                    style={{ fontSize: 'clamp(1.1rem, 1.8vw + 0.6rem, 2.1rem)' }}>
+                   {activeData.subtitle}
+                 </p>
+               )}
                <ul className="mt-8 flex flex-wrap items-center justify-center gap-3" aria-label="Vortragsteam">
                  {TEAM_MEMBERS.map((member) => (
                    <li
@@ -1176,7 +1179,7 @@ export default function PresentationApp() {
           <div className="bg-indigo-600 p-3 rounded-xl text-white shadow-lg shadow-indigo-200"><BookOpen size={28} /></div>
           <div>
              <h1 className="font-bold text-2xl leading-none text-slate-900">Wissensspeicher</h1>
-             <p className="text-sm text-slate-500 mt-1 font-medium">Grundlagen der Professionalisierung und Berufsethik</p>
+             <p className="text-sm text-slate-500 mt-1 font-medium">{TALK_TOPIC}</p>
           </div>
         </div>
         <div className="flex items-center gap-3">
@@ -1253,7 +1256,7 @@ export default function PresentationApp() {
               })}
             </div>
           </div>
-          <p className="mt-6 text-center text-slate-400 text-sm font-medium">Erstellt für Prüfung: Grundlagen der Professionalisierung und Berufsethik.</p>
+          <p className="mt-6 text-center text-slate-400 text-sm font-medium">Erstellt für Prüfung: {TALK_TOPIC}.</p>
         </div>
       </div>
     </div>
